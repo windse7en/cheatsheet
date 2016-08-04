@@ -1,5 +1,6 @@
 import React from 'react';
+import $ from 'jquery';
 
-() => {
-  console.log("I'm in app");
-}
+$('.cheat_sheet_trigger_title').click(function () {
+  $(this).next('.cheat_sheet_output_table').slideToggle(400);
+});

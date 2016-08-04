@@ -3,38 +3,77 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Webpack and Bootstrap</title>
-	<link rel="stylesheet" href="/vendor/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+	<link rel="stylesheet" href="./vendor/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
 </head>
 <body>
-	<div class="container">
-		<h1 class="text-center">Bootstrap loaded with webpack!</h1>
-
-		<br />
-
-		<div class="text-center">
-			<!-- Standard button -->
-			<button type="button" class="btn btn-default">Default</button>
-
-			<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-			<button type="button" class="btn btn-primary">Primary</button>
-
-			<!-- Indicates a successful or positive action -->
-			<button type="button" class="btn btn-success">Success</button>
-
-			<!-- Contextual button for informational alert messages -->
-			<button type="button" class="btn btn-info">Info</button>
-
-			<!-- Indicates caution should be taken with this action -->
-			<button type="button" class="btn btn-warning">Warning</button>
-
-			<!-- Indicates a dangerous or potentially negative action -->
-			<button type="button" class="btn btn-danger">Danger</button>
-
-			<!-- Deemphasize a button by making it look like a link while maintaining button behavior -->
-			<button type="button" class="btn btn-link">Link</button>
-		</div>
+	<div class="cheat_sheet_trigger_title">
+	  <h3>Pattern Modifier</h3>
 	</div>
-
-	<script src="bundle.js"></script>
+	<div class="cheat_sheet_output_table" style="display: block;">
+	  <table class="table">
+	    <tbody>
+	      <tr class="success">
+	        <td class="cheat_sheet_output_cell_1">
+	          <div>g</div>
+	        </td>
+	        <td class="cheat_sheet_output_cell_2">
+	          <div>Global match</div>
+	        </td>
+	      </tr>
+	      <tr class="countrow">
+	        <td class="cheat_sheet_output_cell_1">
+	          <div>i&nbsp;*</div>
+	        </td>
+	        <td class="cheat_sheet_output_cell_2">
+	          <div>Case-i­nse­nsitive</div>
+	        </td>
+	      </tr>
+	      <tr class="success">
+	        <td class="cheat_sheet_output_cell_1">
+	          <div>m&nbsp;*</div>
+	        </td>
+	        <td class="cheat_sheet_output_cell_2">
+	          <div>Multiple lines</div>
+	        </td>
+	      </tr>
+	      <tr class="countrow">
+	        <td class="cheat_sheet_output_cell_1">
+	          <div>s&nbsp;*</div>
+	        </td>
+	        <td class="cheat_sheet_output_cell_2">
+	          <div>Treat string as single line</div>
+	        </td>
+	      </tr>
+	      <tr class="success">
+	        <td class="cheat_sheet_output_cell_1">
+	          <div>x&nbsp;*</div>
+	        </td>
+	        <td class="cheat_sheet_output_cell_2">
+	          <div>Allow comments and whitespace in pattern</div>
+	        </td>
+	      </tr>
+	      <tr class="countrow">
+	        <td class="cheat_sheet_output_cell_1">
+	          <div>e&nbsp;*</div>
+	        </td>
+	        <td class="cheat_sheet_output_cell_2">
+	          <div>Evaluate replac­ement</div>
+	        </td>
+	      </tr>
+	      <tr class="success">
+	        <td class="cheat_sheet_output_cell_1">
+	          <div>U&nbsp;*</div>
+	        </td>
+	        <td class="cheat_sheet_output_cell_2">
+	          <div>Ungreedy pattern</div>
+	        </td>
+	      </tr>
+	    </tbody>
+	  </table>
+	  <div class="cheat_sheet_note">
+	    <div>* PCRE modifier</div>
+	  </div>
+	</div>
+	<script src="./dist/js/cheatsheet/app.js"></script>
 </body>
 </html>
