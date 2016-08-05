@@ -66,17 +66,17 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	(0, _jquery2.default)('.cheat_sheet_trigger_title').click(function () {
-	  (0, _jquery2.default)(this).next('.cheat_sheet_output_table').slideToggle(400);
-	});
-
 	var pattern_modifier = {
-	  title: 'Pattern Modifier',
 	  data: ["g", "i *", "m *", "s *", "x *", "e *", "U *"],
 	  descriptions: ["Global match", "Case-i­nse­nsitive", "Multiple lines", "Treat string as single line", "Allow comments and whitespace in pattern", "Evaluate replac­ement", "Ungreedy pattern"]
 	};
 
-	_reactDom2.default.render(_react2.default.createElement(_csTableCard2.default, { tableData: pattern_modifier }), (0, _jquery2.default)('#csContainer')[0]);
+	_reactDom2.default.render(_react2.default.createElement(_csTableCard2.default, {
+	  columns: 1,
+	  tableFooter: '* PCRE modifier',
+	  tableTitle: 'Pattern Modifier',
+	  tableData: pattern_modifier
+	}), (0, _jquery2.default)('#csContainer')[0]);
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/tz043867/personal_stuff/cheatsheet/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "app.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
@@ -31310,9 +31310,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactDom = __webpack_require__(35);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
 	var _jquery = __webpack_require__(175);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _csTableCardRow = __webpack_require__(179);
+
+	var _csTableCardRow2 = _interopRequireDefault(_csTableCardRow);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31330,22 +31338,99 @@
 
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CSTableCard).call(this));
 
+	    var formattedData = _this.cleanTableData(props.tableData);
+	    var splitTableData = _this.splitTableData(formattedData, props.columns);
 	    _this.state = {
-	      data: props.tableData
+	      data: splitTableData
 	    };
+	    _this.toggleTable = _this.toggleTable.bind(_this);
 	    return _this;
 	  }
 
 	  _createClass(CSTableCard, [{
+	    key: 'cleanTableData',
+	    value: function cleanTableData(data) {
+	      var resultArray = [];
+	      var dataKeys = Object.keys(data);
+
+	      var _loop = function _loop(i) {
+	        var tempObject = {};
+	        dataKeys.forEach(function (dataKey) {
+	          tempObject[dataKey] = data[dataKey][i];
+	        });
+	        resultArray.push(tempObject);
+	      };
+
+	      for (var i = 0; i < data[dataKeys[0]].length; i++) {
+	        _loop(i);
+	      }
+	      return resultArray;
+	    }
+	  }, {
+	    key: 'splitTableData',
+	    value: function splitTableData(formattedData, columns) {
+	      var splitData = [];
+	      for (var i = 0; i < formattedData.length; i = i + columns) {
+	        var tempArray = [];
+	        for (var j = 0; j < columns; j++) {
+	          if (i + j < formattedData.length) {
+	            tempArray.push(formattedData[i + j]);
+	          }
+	        }
+	        splitData.push(tempArray);
+	      }
+	      return splitData;
+	    }
+	  }, {
+	    key: 'toggleTable',
+	    value: function toggleTable() {
+	      var dom = _reactDom2.default.findDOMNode(this);
+	      (0, _jquery2.default)(dom).children('.cheat_sheet_output_table').slideToggle();
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'cheat_sheet_trigger_title' },
+	        null,
 	        _react2.default.createElement(
-	          'h4',
-	          null,
-	          this.state.data.title
+	          'div',
+	          { className: 'cheat_sheet_trigger_title', onClick: this.toggleTable },
+	          _react2.default.createElement(
+	            'h4',
+	            null,
+	            this.props.tableTitle
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'cheat_sheet_output_table' },
+	          _react2.default.createElement(
+	            'table',
+	            { className: 'table' },
+	            _react2.default.createElement(
+	              'tbody',
+	              null,
+	              this.state.data.map(function (rowArray, currentIndex) {
+	                return _react2.default.createElement(_csTableCardRow2.default, {
+	                  data: rowArray,
+	                  key: currentIndex,
+	                  rowKeys: Object.keys(_this2.props.tableData),
+	                  rowIndex: currentIndex });
+	              })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'cheat_sheet_note' },
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              this.props.tableFooter
+	            )
+	          )
 	        )
 	      );
 	    }
@@ -31355,12 +31440,63 @@
 	}(_react.Component);
 
 	CSTableCard.propTypes = {
-	  tableData: _react.PropTypes.object.isRequired
+	  tableTitle: _react.PropTypes.string.isRequired,
+	  tableFooter: _react.PropTypes.string,
+	  tableData: _react.PropTypes.object.isRequired,
+	  columns: _react.PropTypes.number.isRequired
 	};
 
 	exports.default = CSTableCard;
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/tz043867/personal_stuff/cheatsheet/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "csTableCard.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/tz043867/personal_stuff/cheatsheet/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/tz043867/personal_stuff/cheatsheet/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var TableCardColumn = function TableCardColumn(props) {
+	  return _react2.default.createElement(
+	    'td',
+	    { className: 'cheat_sheet_output_cell_' + (props.columnsIndex + 1) },
+	    _react2.default.createElement(
+	      'div',
+	      null,
+	      props.text
+	    )
+	  );
+	};
+
+	var TableCardRow = function TableCardRow(props) {
+	  return _react2.default.createElement(
+	    'tr',
+	    { className: props.rowIndex % 2 === 0 ? 'success' : '' },
+	    props.data.map(function (item, index) {
+	      var result = [];
+	      props.rowKeys.forEach(function (rowKey) {
+	        result.push(TableCardColumn({ key: index, text: item[rowKey], columnsIndex: index }));
+	      });
+	      return result;
+	    })
+	  );
+	};
+
+	exports.default = TableCardRow;
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/tz043867/personal_stuff/cheatsheet/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "csTableCardRow.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }
 /******/ ]);

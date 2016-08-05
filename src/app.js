@@ -4,12 +4,7 @@ import $ from 'jquery';
 
 import TableCard from './jsx/csTableCard.jsx';
 
-$('.cheat_sheet_trigger_title').click(function () {
-  $(this).next('.cheat_sheet_output_table').slideToggle(400);
-});
-
 const pattern_modifier = {
-  title: 'Pattern Modifier',
   data: [
     "g",
     "i *",
@@ -30,4 +25,9 @@ const pattern_modifier = {
   ]
 };
 
-ReactDOM.render(<TableCard tableData={pattern_modifier}/>, $('#csContainer')[0]);
+ReactDOM.render(<TableCard
+  columns={1} 
+  tableFooter='* PCRE modifier'
+  tableTitle='Pattern Modifier'
+  tableData={pattern_modifier}
+  />, $('#csContainer')[0]);
